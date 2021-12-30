@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Dropzone Demo</title>
+  <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+  <style>
+    .dropzone {
+      border: 2px dashed #0087F7;
+      margin: 10%;
+      min-height: 400px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="myDropzone" class="dropzone"></div>
+  <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+  <script>
+    Dropzone.options.myDropzone = {
+      init: function () {
+        // redirect after queue complete
+        // upload queue when button click
+        // custom init code
+      },
+      // click upload options
+      uploadMultiple: false,
+      parallelUploads: 2,
+      paramName: "file", // The name that will be used to transfer the file
+      maxFilesize: 3, // MB
+      acceptedFiles: "image/*",
+      maxFiles: 30,
+      dictDefaultMessage: `拖拽，点击或者黏贴上传图片`, // message display on drop area
+
+    };
+    var myDropzone = new Dropzone("div#myDropzone", { url: "/"});
+  </script>
+</body>
+<script>
+  const target = document.querySelector('#myDropzone');
+  // Handle the `paste` event
+  target.addEventListener('paste', function (evt) {
+    // Get the data of clipboard
+    const data = evt.clipboardData.items;
+    const items = [].slice.call(data).filter(function (item) {
+      // Filter the image items only
+      return item.type.indexOf('image') !== -1;
+    });
+    if (items.length === 0) {
+      return;
+    }
+    const item = items[0];
+    const file = item.getAsFile();
+    myDropzone.addFile(item.getAsFile())
+  });
+</script>
+
+</html>
