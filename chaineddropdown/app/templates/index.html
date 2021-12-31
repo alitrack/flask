@@ -36,18 +36,14 @@
                 <select id="cities" name="city" hx-get="/areas/"  
                 hx-trigger="change, htmx:afterSettle" hx-target="#areas"  
                 hx-indicator=".htmx-indicator">
-                    {% for city in cities %}
-                    <option value="{{ city.code }}">{{ city.name }}</option>
-                    {% endfor %}
+                {{ render_partial('partials/cities.html', cities=cities) }}
                 </select>
         </div>
 
         <div>
             <label>Area</label>
                 <select id="areas">
-                    {% for area in areas %}
-                    <option value="{{ area.code }}">{{ area.name }}</option>
-                    {% endfor %}
+                    {{ render_partial('partials/areas.html', areas=areas) }}
                 </select>
         </div>
     </body>
