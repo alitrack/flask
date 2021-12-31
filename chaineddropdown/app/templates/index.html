@@ -1,0 +1,54 @@
+<html>
+    <header>
+    <script src="https://unpkg.com/htmx.org@1.6.1" integrity="sha384-tvG/2mnCFmGQzYC1Oh3qxQ7CkQ9kMzYjWZSNtrRZygHPDDqottzEJsqS4oUVodhW" crossorigin="anonymous"></script>
+
+        <style>
+            div {
+                border-style: solid;
+                border-color: rgb(3, 3, 122);
+                border-width: 5px;
+                margin-right: 10px;
+                padding-top: 20px;
+                padding-left: 20px;
+                font-size: x-large;
+                height: 60px;
+                width:300px;
+                float: left;
+            }
+        </style>
+    </header>
+
+    <body>
+
+        <div>
+            <label>Province</label>
+                <select name="province" hx-get="/cities/" 
+                hx-target="#cities" hx-indicator=".htmx-indicator" id ="provinces" hx-trigger="change, load" >
+                {% for province in provinces %}
+                    <option value="{{ province.code }}">{{ province.name }}</option>
+                {% endfor %}
+
+                </select>
+        </div>
+
+        <div>
+            <label>City</label>
+                <select id="cities" name="city" hx-get="/areas/"  
+                hx-trigger="change, htmx:afterSettle" hx-target="#areas"  
+                hx-indicator=".htmx-indicator">
+                    {% for city in cities %}
+                    <option value="{{ city.code }}">{{ city.name }}</option>
+                    {% endfor %}
+                </select>
+        </div>
+
+        <div>
+            <label>Area</label>
+                <select id="areas">
+                    {% for area in areas %}
+                    <option value="{{ area.code }}">{{ area.name }}</option>
+                    {% endfor %}
+                </select>
+        </div>
+    </body>
+</html>
