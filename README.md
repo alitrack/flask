@@ -11,3 +11,6 @@ upload file, support click, drag and paste from clipboard
 dependent/chained dropdown list with [htmx](https://htmx.org/) 
 
 no need write one line js code
+
+## mdeditor
+A WYSIWYG Markdown editor bases on [Vditor](https://b3log.org/vditor/)

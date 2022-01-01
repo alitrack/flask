@@ -1,0 +1,71 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/vditor/dist/index.css" />
+    <script src="//cdn.jsdelivr.net/npm/vditor/dist/index.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/vditor/dist/js/lute/lute.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/vditor/dist/js/highlight.js/highlight.pack.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/vditor/dist/js/mermaid/mermaid.min.js"></script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        window.Lute = window.Lute || {}
+        window.hljs = window.hljs || {}
+    </script>
+    <style>
+        .header {
+            background-color: #fff;
+            box-shadow: rgba(0, 0, 0, 0.05) 0 1px 7px;
+            border-bottom: 1px solid #e1e4e8;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
+</head>
+
+<body>
+    <h1>Markdown Editor</h1>
+    <script>
+        function save(event) {
+            event.preventDefault();
+            var fname = document.getElementById("fname").value;
+            alert(fname)
+            $.ajax({
+                type: 'POST', url: "/vditor/save/"
+                , data: JSON.stringify({
+                    'fname': fname,
+                    'content': vditor.getValue(),
+                })
+                , dataType: 'json'
+                , contentType: 'application/json'
+                , success: function (data) {
+                    console.log("success")
+                }
+            });
+        }
+
+    </script>
+    file name:<input type="text" id="fname" value="untitled.md"><button onclick="save(event)">Save</button>
+    <div id="vditor"></div>
+    <script>
+        var vditor = new Vditor('vditor', {
+            "height": 720,
+            "cache": {
+                "enable": false
+            },
+            "value": "## 所见即所得（WYSIWYG）\n所见即所得模式对不熟悉 Markdown 的用户较为友好，熟悉 Markdown 的话也可以无缝使用。 ",
+            "mode": "wysiwyg",
+            upload: {
+                url: '/vditor/uploads/',
+                linkToImgUrl: '/static/uploads/',
+                accept: '.jpg,.png,.gif,.jpeg',
+                filename(name) {
+                    return name.replace(/\?|\\|\/|:|\||<|>|\*|\[|\]|\s+/g, '-')
+                },
+            },
+        })
+    </script>
+</body>
+
+</html>
